@@ -12,7 +12,6 @@ class Setting():
                              [0, 0, 0, 0, 0, 0, 0, 0],
                              [0, 0, 0, 0, 0, 0, 0, 0],
                              [0, 0, 0, 0, 0, 0, 0, 0]]
-
     def find_valid_moves(self, player):
         # methode นี้ใช้หาจุดที่ผู่เล่นวางได้โดยใส่ player ด้วยตัวเลข 1 หมายถึงผู้เล่นหมากดำ ตัวเลข 2 หมายถึงผู้เล่นหมากขาว และจะ return list ที่มีจุดที่วางได้อยู่
         # วิธีใช้งาน >>>> แค่ใส่เลข (1, 2) ผู้เล่นไป จะได้ list ของจุดที่วางได้มา
@@ -70,10 +69,10 @@ class Setting():
     def determine_winner(self): # ใช้เมื่อเกมจบแล้ว หาผู้ชนะ แพ้ เสมอ
         player1_score = sum(row.count(1) for row in self.table_matrix)
         player2_score = sum(row.count(2) for row in self.table_matrix)
-
+        self.time+=1
         if player1_score > player2_score:
             return "สีดำชนะ!"
         elif player2_score > player1_score:
             return "สีขาวชนะ!"
         else:
-            return "เกมเสมอ!"                    
+            return "เกมเสมอ!"

@@ -1,8 +1,6 @@
 import tkinter as tk
 from tkinter import messagebox
 from setting import Setting
-
-
 class Board(tk.Frame):
     def __init__(self, master):
         super().__init__(master)
@@ -13,7 +11,6 @@ class Board(tk.Frame):
         self.initialize_game()
         self.update_board()
         self.hinter()
-    
     def create_table(self):
         self.buttons = []
         for i in range(8):
@@ -98,5 +95,8 @@ class Board(tk.Frame):
                                          [0, 0, 0, 0, 0, 0, 0, 0],
                                          [0, 0, 0, 0, 0, 0, 0, 0],
                                          [0, 0, 0, 0, 0, 0, 0, 0]]
+
             self.update_board()
             self.hinter()
+            self.time =self.time+1
+            return(self.time())

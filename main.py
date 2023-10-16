@@ -1,13 +1,16 @@
 import board as b
 import tkinter as tk
+import timer
 def play():
+    play_button.destroy()## destroy button
     board = b.Board(root)
-    board.place(x=50, y=60)
+    board.place(x=300, y=200)
+    time = timer.Counttime(root)
 root = tk.Tk()
 root.title('OTHELLO !')
 root.geometry('1000x700')
-title = tk.Label(root,text="OTHELLO",font=('arial',40))
-title.pack()
-play_button = tk.Button(root,text='Player VS player',command=play,width=10,height=5)
-play_button.pack(padx=100,pady=100)
+title = tk.Label(root,text="OTHELLO !!!",font=('arial',40))#title of the game
+title.place(x=350, y=10)
+play_button = tk.Button(root,text='Player VS player',command=play,width=20,height=5,bg='green')
+play_button.pack(padx=200,pady=100)
 root.mainloop()
