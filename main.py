@@ -1,6 +1,7 @@
 import board as b
 import tkinter as tk
 import timer
+from setting import Setting
 def play():
     play_button.destroy()## destroy button
     board = b.Board(root)

@@ -1,6 +1,8 @@
 import tkinter as tk
 from tkinter import messagebox
 from setting import Setting
+
+
 class Board(tk.Frame):
     def __init__(self, master):
         super().__init__(master)
@@ -11,6 +13,8 @@ class Board(tk.Frame):
         self.initialize_game()
         self.update_board()
         self.hinter()
+        self.show_player()
+    
     def create_table(self):
         self.buttons = []
         for i in range(8):
@@ -20,7 +24,6 @@ class Board(tk.Frame):
                 each.grid(row=i, column=j)
                 row.append(each)
             self.buttons.append(row)
-
     def initialize_game(self):
         self.setting = Setting()  # สร้างอ็อบเจกต์ Setting สำหรับเกม
         self.current_player = 1  # รายชื่อผู้เล่นรายแรก
@@ -32,7 +35,6 @@ class Board(tk.Frame):
 
 
     def send(self, i, j):
-
         if self.setting.is_valid_move(i, j, self.current_player):
             self.setting.place_piece(i, j, self.current_player)
             self.update_board()
@@ -48,6 +50,8 @@ class Board(tk.Frame):
                 self.clear_hint()
                 self.current_player = 3 - self.current_player
                 self.hinter()
+
+        self.fixed_show_player()
 
     def update_board(self):
         table_matrix = self.setting.table_matrix
@@ -85,9 +89,9 @@ class Board(tk.Frame):
     
     def show_win(self):
         if len(self.setting.find_valid_moves(1)) == 0 and len(self.setting.find_valid_moves(2)) == 0:
+            Setting.time = 1
             messagebox.showinfo('End Game!',self.setting.determine_winner())
-
-            self.setting.table_matrix = [[0, 0, 0, 0, 0, 0, 0, 0],
+            self.setting.table_matrix = [[0, 0, 0, 0, 0, 0, 0, 0], 
                                          [0, 0, 0, 0, 0, 0, 0, 0],
                                          [0, 0, 0, 0, 0, 0, 0, 0],
                                          [0, 0, 0, 2, 1, 0, 0, 0],
@@ -95,8 +99,15 @@ class Board(tk.Frame):
                                          [0, 0, 0, 0, 0, 0, 0, 0],
                                          [0, 0, 0, 0, 0, 0, 0, 0],
                                          [0, 0, 0, 0, 0, 0, 0, 0]]
-
             self.update_board()
             self.hinter()
-            self.time =self.time+1
-            return(self.time())
+
+    def show_player(self):
+        self.player_widget = tk.Label(self, bg='black', text= 'Black turn', fg='white', font=('Bauhaus 93',32))
+        self.player_widget.grid(row=9, columnspan= 8, pady= 10)
+    
+    def fixed_show_player(self):
+        if self.current_player == 1:
+            self.player_widget.configure(bg='black', text= 'Black turn', fg='white')
+        else:
+            self.player_widget.configure(bg='white', text= 'White turn', fg='Black')
