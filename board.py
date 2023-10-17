@@ -58,7 +58,8 @@ class Board(tk.Frame):
         self.show_win()
 
         if len(self.setting.find_valid_moves(self.current_player)) == 0:
-                print('swap plaer')
+                messagebox.showinfo('Attention please!','The game have to swap player.')
+                print('swap player')
                 self.clear_hint()
                 self.current_player = 3 - self.current_player
                 self.hinter()
