@@ -6,8 +6,7 @@ from time_widget import Time_widget
 
 class Board(tk.Frame):
     def __init__(self, master):
-        super().__init__(master)
-        
+        super().__init__(master,bg='light gray')
         self.load_piece_images()
         self.create_table()
         self.create_hint()
@@ -17,7 +16,7 @@ class Board(tk.Frame):
         self.show_player()
         self.create_total_score()
         self.time_widget = Time_widget(self)  # Create a Time_widget instance
-        self.time_widget.grid(row=13, columnspan=8)  # Display the Time_widget label on your board
+        self.time_widget.grid(row=14, columnspan=8, pady= 10)  # Display the Time_widget label on your board
     
     def create_table(self):
         self.buttons = []
@@ -104,7 +103,7 @@ class Board(tk.Frame):
     def show_win(self):
         if len(self.setting.find_valid_moves(1)) == 0 and len(self.setting.find_valid_moves(2)) == 0:
             self.time_widget.flag = False
-            messagebox.showinfo('End Game!',self.setting.determine_winner()+ f'\nTime: {self.time_widget.timeMin}:{self.time_widget.timeSec} ')
+            messagebox.showinfo('End Game!',self.setting.determine_winner()+ f'\nTime: [{self.time_widget.timeHour:02d}:{self.time_widget.timeMin:02d}:{self.time_widget.timeSec:02d}]')
             self.time_widget.flag = True
             self.time_widget.update_time()
             self.time_widget.reset_time()
@@ -124,23 +123,27 @@ class Board(tk.Frame):
             self.time_widget.reset_time()
 
     def show_player(self):
-        self.player_widget = tk.Label(self, bg='black', text= '<Black turn>', fg='white', font=('Bauhaus 93',32))
-        self.player_widget.grid(row=9, columnspan= 8, pady= 10)
+        self.player_widget = tk.Label(self, text= 'Black turn', font=('Grandview',32), bg='light gray')
+        self.picture_piecce = tk.Label(self, image=self.black_piece_image)
+        self.picture_piecce.grid(row=9,column=0, columnspan=2)
+        self.player_widget.grid(row=9,column=1, columnspan= 6, pady= 10)
     
     def fixed_show_player(self):
         if self.current_player == 1:
-            self.player_widget.configure(bg='black', text= '<Black turn>', fg='white')
+            self.player_widget.configure(text= 'Black turn')
+            self.picture_piecce.configure(image=self.black_piece_image)
         else:
-            self.player_widget.configure(bg='white', text= '<White turn>', fg='Black')
+            self.player_widget.configure(text= 'White turn')
+            self.picture_piecce.configure(image=self.white_piece_image)
 
     def create_total_score(self):
-        self.player1_show_score = tk.Label(self,text='>>Black score: 2', bg='black', fg='white', font=('Bauhaus 93',12))
-        self.player1_show_score.grid(row=10,column=1,columnspan=3, pady= 10)
-        self.player2_show_score = tk.Label(self,text='>>White score: 2', font=('Bauhaus 93',12))
-        self.player2_show_score.grid(row=12,column=1,columnspan=3, pady= 10)
+        self.player1_show_score = tk.Label(self,text='Black score: 2', bg='light gray', font=('Grandview',12))
+        self.player1_show_score.grid(row=10,column=0,columnspan=8, pady= 10)
+        self.player2_show_score = tk.Label(self,text='White score: 2', bg='light gray', font=('Grandview',12))
+        self.player2_show_score.grid(row=12,column=0,columnspan=8, pady= 10)
 
     def update_score(self):
         self.player1_score = sum(row.count(1) for row in self.setting.table_matrix)
         self.player2_score = sum(row.count(2) for row in self.setting.table_matrix)
-        self.player1_show_score.configure(text=f'>>Black score: {self.player1_score}', bg='black', fg='white')
-        self.player2_show_score.configure(text=f'>>White score: {self.player2_score}', bg='white', fg='black')
+        self.player1_show_score.configure(text=f'Black score: {self.player1_score}')
+        self.player2_show_score.configure(text=f'White score: {self.player2_score}')
