@@ -1,6 +1,9 @@
 import tkinter as tk
 from tkinter import messagebox
 from setting import Setting
+from time_widget import Time_widget
+
+
 class Board(tk.Frame):
     def __init__(self, master):
         super().__init__(master)
@@ -12,7 +15,10 @@ class Board(tk.Frame):
         self.update_board()
         self.hinter()
         self.show_player()
-        self.show_total_number()
+        self.create_total_score()
+        self.time_widget = Time_widget(self)  # Create a Time_widget instance
+        self.time_widget.grid(row=13, columnspan=8)  # Display the Time_widget label on your board
+    
     def create_table(self):
         self.buttons = []
         for i in range(8):
@@ -22,6 +28,7 @@ class Board(tk.Frame):
                 each.grid(row=i, column=j)
                 row.append(each)
             self.buttons.append(row)
+
     def initialize_game(self):
         self.setting = Setting()  # สร้างอ็อบเจกต์ Setting สำหรับเกม
         self.current_player = 1  # รายชื่อผู้เล่นรายแรก
@@ -33,6 +40,7 @@ class Board(tk.Frame):
 
 
     def send(self, i, j):
+
         if self.setting.is_valid_move(i, j, self.current_player):
             self.setting.place_piece(i, j, self.current_player)
             self.update_board()
@@ -41,9 +49,8 @@ class Board(tk.Frame):
             self.setting.display_board()
             self.current_player = 3 - self.current_player # สลับผู้เล่น
             self.hinter()
-            
         self.show_win()
-        self.update_score()
+
         if len(self.setting.find_valid_moves(self.current_player)) == 0:
                 print('swap plaer')
                 self.clear_hint()
@@ -51,10 +58,10 @@ class Board(tk.Frame):
                 self.hinter()
 
         self.fixed_show_player()
+        self.update_score()
 
     def update_board(self):
         table_matrix = self.setting.table_matrix
-        Setting.time = 0
         for i in range(8):
             for j in range(8):
                 if table_matrix[i][j] == 1:
@@ -89,38 +96,44 @@ class Board(tk.Frame):
     
     def show_win(self):
         if len(self.setting.find_valid_moves(1)) == 0 and len(self.setting.find_valid_moves(2)) == 0:
-            Setting.time = 1
-            messagebox.showinfo('End Game!',self.setting.determine_winner())
-            self.reset_game()
-            
-    def reset_game(self):      
-        self.setting.table_matrix = [[0, 0, 0, 0, 0, 0, 0, 0], 
-                                     [0, 0, 0, 0, 0, 0, 0, 0],
-                                     [0, 0, 0, 0, 0, 0, 0, 0],
-                                     [0, 0, 0, 2, 1, 0, 0, 0],
-                                     [0, 0, 0, 1, 2, 0, 0, 0],
-                                     [0, 0, 0, 0, 0, 0, 0, 0],
-                                     [0, 0, 0, 0, 0, 0, 0, 0],
-                                     [0, 0, 0, 0, 0, 0, 0, 0]]
-        self.update_board()
-        self.hinter()
-        self.current_player()
+            self.time_widget.flag = False
+            messagebox.showinfo('End Game!',self.setting.determine_winner()+ f'\nTime: {self.time_widget.timeMin}:{self.time_widget.timeSec} ')
+            self.time_widget.flag = True
+            self.time_widget.update_time()
+            self.time_widget.reset_time()
+
+            self.setting.table_matrix = [[0, 0, 0, 0, 0, 0, 0, 0],
+                                         [0, 0, 0, 0, 0, 0, 0, 0],
+                                         [0, 0, 0, 0, 0, 0, 0, 0],
+                                         [0, 0, 0, 2, 1, 0, 0, 0],
+                                         [0, 0, 0, 1, 2, 0, 0, 0],
+                                         [0, 0, 0, 0, 0, 0, 0, 0],
+                                         [0, 0, 0, 0, 0, 0, 0, 0],
+                                         [0, 0, 0, 0, 0, 0, 0, 0]]
+            self.update_board()
+            self.current_player = 1
+            self.hinter()
+            self.update_score()
+            self.time_widget.reset_time()
+
     def show_player(self):
-        self.player_widget = tk.Label(self, bg='black', text= 'Black turn', fg='white', font=('Bauhaus 93',32))
+        self.player_widget = tk.Label(self, bg='black', text= '<Black turn>', fg='white', font=('Bauhaus 93',32))
         self.player_widget.grid(row=9, columnspan= 8, pady= 10)
     
     def fixed_show_player(self):
         if self.current_player == 1:
-            self.player_widget.configure(bg='black', text= 'Black turn', fg='white')
+            self.player_widget.configure(bg='black', text= '<Black turn>', fg='white')
         else:
-            self.player_widget.configure(bg='white', text= 'White turn', fg='Black')
-    def show_total_number(self):
-        self.player1_show_score = tk.Label(self,text=f'black score: {2}')
-        self.player1_show_score.grid(row=10,column=1,columnspan=2)
-        self.player2_show_score = tk.Label(self,text=f'white score: {2}')
-        self.player2_show_score.grid(row=12,column=1,columnspan=2)
+            self.player_widget.configure(bg='white', text= '<White turn>', fg='Black')
+
+    def create_total_score(self):
+        self.player1_show_score = tk.Label(self,text='>>Black score: 2', bg='black', fg='white', font=('Bauhaus 93',12))
+        self.player1_show_score.grid(row=10,column=1,columnspan=3, pady= 10)
+        self.player2_show_score = tk.Label(self,text='>>White score: 2', font=('Bauhaus 93',12))
+        self.player2_show_score.grid(row=12,column=1,columnspan=3, pady= 10)
+
     def update_score(self):
         self.player1_score = sum(row.count(1) for row in self.setting.table_matrix)
         self.player2_score = sum(row.count(2) for row in self.setting.table_matrix)
-        self.player1_show_score.configure(text=f'black score: {self.player1_score}')
-        self.player2_show_score.configure(text=f'white score: {self.player2_score}')
+        self.player1_show_score.configure(text=f'>>Black score: {self.player1_score}', bg='black', fg='white')
+        self.player2_show_score.configure(text=f'>>White score: {self.player2_score}', bg='white', fg='black')

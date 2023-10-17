@@ -1,17 +1,16 @@
 import board as b
 import tkinter as tk
-import timer
-def play():
-    play_button.destroy()## destroy button
+def player_vs_player():
+    pvp_button.destroy()
     board = b.Board(root)
-    board.place(x=300, y=200)
-    time = timer.Count_time(root)
-    board.show_total_number()
+    board.place(x=50, y=50)
+    board.configure(bg= 'light blue')
+
 root = tk.Tk()
 root.title('OTHELLO !')
-root.geometry('1000x800')
-title = tk.Label(root,text="OTHELLO !!!",font=('arial',40))#title of the game
-title.place(x=350, y=10)
-play_button = tk.Button(root,text='Player VS player',command=play,width=20,height=5,bg='green')
-play_button.pack(padx=200,pady=100)
+root.geometry('1000x700')
+root.configure(bg='light blue')
+pvp_button = tk.Button(root,text='Player VS player',command=player_vs_player,width=20,height=5,bg='green')
+pvp_button.pack(padx=200,pady=100)
+
 root.mainloop()
