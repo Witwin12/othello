@@ -4,6 +4,7 @@ def player_vs_player():
     pvp_button.destroy()
     board = b.Board(root)
     board.place(x=300, y=80)
+    board.configure(bg='lightxgray')
 root = tk.Tk()
 root.title('OTHELLO !')
 root.geometry('1000x700')
