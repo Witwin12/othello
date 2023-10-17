@@ -1,12 +1,11 @@
 import board as b
 import tkinter as tk
 import timer
-from setting import Setting
 def play():
     play_button.destroy()## destroy button
     board = b.Board(root)
     board.place(x=300, y=200)
-    time = timer.Counttime(root)
+    time = timer.Count_time(root)
 root = tk.Tk()
 root.title('OTHELLO !')
 root.geometry('1000x700')
