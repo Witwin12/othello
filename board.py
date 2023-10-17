@@ -12,6 +12,7 @@ class Board(tk.Frame):
         self.update_board()
         self.hinter()
         self.show_player()
+        self.show_total_number()
     def create_table(self):
         self.buttons = []
         for i in range(8):
@@ -40,8 +41,9 @@ class Board(tk.Frame):
             self.setting.display_board()
             self.current_player = 3 - self.current_player # สลับผู้เล่น
             self.hinter()
+            
         self.show_win()
-
+        self.update_score()
         if len(self.setting.find_valid_moves(self.current_player)) == 0:
                 print('swap plaer')
                 self.clear_hint()
@@ -112,10 +114,13 @@ class Board(tk.Frame):
             self.player_widget.configure(bg='black', text= 'Black turn', fg='white')
         else:
             self.player_widget.configure(bg='white', text= 'White turn', fg='Black')
-    def show_total_number():
-        player1_score = sum(row.count(1) for row in Setting.table_matrix)
-        player2_score = sum(row.count(2) for row in Setting.table_matrix)
-        player1_show_score = tk.Label(f'black score: {player1_score}')
-        player1_show_score.pack()
-        player2_show_score = tk.Label(f'white score: {player2_score}')
-        player2_show_score.pack()
+    def show_total_number(self):
+        self.player1_show_score = tk.Label(self,text=f'black score: {2}')
+        self.player1_show_score.grid(row=10,column=1,columnspan=2)
+        self.player2_show_score = tk.Label(self,text=f'white score: {2}')
+        self.player2_show_score.grid(row=12,column=1,columnspan=2)
+    def update_score(self):
+        self.player1_score = sum(row.count(1) for row in self.setting.table_matrix)
+        self.player2_score = sum(row.count(2) for row in self.setting.table_matrix)
+        self.player1_show_score.configure(text=f'black score: {self.player1_score}')
+        self.player2_show_score.configure(text=f'white score: {self.player2_score}')
