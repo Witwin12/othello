@@ -102,6 +102,7 @@ class Board(tk.Frame):
                                      [0, 0, 0, 0, 0, 0, 0, 0]]
         self.update_board()
         self.hinter()
+        self.current_player()
     def show_player(self):
         self.player_widget = tk.Label(self, bg='black', text= 'Black turn', fg='white', font=('Bauhaus 93',32))
         self.player_widget.grid(row=9, columnspan= 8, pady= 10)
@@ -111,3 +112,10 @@ class Board(tk.Frame):
             self.player_widget.configure(bg='black', text= 'Black turn', fg='white')
         else:
             self.player_widget.configure(bg='white', text= 'White turn', fg='Black')
+    def show_total_number():
+        player1_score = sum(row.count(1) for row in Setting.table_matrix)
+        player2_score = sum(row.count(2) for row in Setting.table_matrix)
+        player1_show_score = tk.Label(f'black score: {player1_score}')
+        player1_show_score.pack()
+        player2_show_score = tk.Label(f'white score: {player2_score}')
+        player2_show_score.pack()

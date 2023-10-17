@@ -5,6 +5,7 @@ def play():
     play_button.destroy()## destroy button
     board = b.Board(root)
     board.place(x=300, y=200)
+    b.Board.show_total_number(root)
     time = timer.Count_time(root)
 root = tk.Tk()
 root.title('OTHELLO !')
