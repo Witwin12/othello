@@ -21,8 +21,15 @@ class Board(tk.Frame):
     
     def create_table(self):
         self.buttons = []
+        # Create column labels (A, B, C, ...)
+        for j in range(8):
+            label = tk.Label(self, text=chr(ord('A') + j), font=("Arial", 12))
+            label.grid(row=8, column=j, pady=5)
         for i in range(8):
             row = []
+                # Create row label (1, 2, 3, ...)
+            row_label = tk.Label(self, text=str(i + 1), font=("Arial", 12))
+            row_label.grid(row=i, column=8, padx=5)
             for j in range(8):
                 each = tk.Button(self, image= self.each_table_image, padx=20, pady=20, relief="solid", command=lambda i=i, j=j: self.send(i, j))
                 each.grid(row=i, column=j)
