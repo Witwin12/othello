@@ -100,7 +100,6 @@ class Board(tk.Frame):
                                      [0, 0, 0, 0, 0, 0, 0, 0],
                                      [0, 0, 0, 0, 0, 0, 0, 0],
                                      [0, 0, 0, 0, 0, 0, 0, 0]]
-        self.setting.time = 0
         self.update_board()
         self.hinter()
     def show_player(self):
