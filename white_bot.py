@@ -1,9 +1,6 @@
 from board import Board
 import random
 class white_bot(Board):
-    def __init__(self, master):
-        super().__init__(master)
-        self.white_bot_play()
         
     def white_bot_play(self):
         if self.current_player == 2:#check a white turn
@@ -38,15 +35,3 @@ class white_bot(Board):
             self.white_bot_play()
             self.show_win()
         
-
-    def show_win(self):
-        super().show_win()
-        if self.setting.table_matrix == [[0, 0, 0, 0, 0, 0, 0, 0],
-                                         [0, 0, 0, 0, 0, 0, 0, 0],
-                                         [0, 0, 0, 0, 0, 0, 0, 0],
-                                         [0, 0, 0, 2, 1, 0, 0, 0],
-                                         [0, 0, 0, 1, 2, 0, 0, 0],
-                                         [0, 0, 0, 0, 0, 0, 0, 0],
-                                         [0, 0, 0, 0, 0, 0, 0, 0],
-                                         [0, 0, 0, 0, 0, 0, 0, 0]]:
-            self.white_bot_play()
