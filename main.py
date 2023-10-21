@@ -15,7 +15,7 @@ def player_vs_player():
     board.place(x=300, y=80)
     board.configure(bg='lightgray')
     menu_button = tk.Button(root, text='Main Menu', command=main_menu, width=20, height=5, bg='green')
-    menu_button.place(x=100, y=100)
+    menu_button.place(x=100, y=100)# create menu button
 
 def player_vs_bot():
     global board,menu_button
