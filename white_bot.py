@@ -1,4 +1,5 @@
 from board import Board
+import random
 class white_bot(Board):
     def __init__(self, master):
         super().__init__(master)
@@ -18,7 +19,8 @@ class white_bot(Board):
                     break
             else:
                     #pick a first move 
-                i, j = valid_moves[0]
+                new_current_player = [valid_moves[0],valid_moves[-1]]
+                i, j = random.choice(new_current_player)
         
             print(f'Go GO {i},{j}')
             self.setting.place_piece(i, j, self.current_player)
