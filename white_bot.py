@@ -19,7 +19,7 @@ class white_bot(Board):
                 new_current_player = [valid_moves[0],valid_moves[-1]]
                 i, j = random.choice(new_current_player)
         
-            print(f'Go GO {i},{j}')
+            print(f'go go {i},{j}')
             self.setting.place_piece(i, j, self.current_player)
             self.clear_hint()
             self.current_player = 3 - self.current_player
@@ -27,7 +27,6 @@ class white_bot(Board):
             self.hinter()
             self.fixed_show_player()
             self.update_score()
-
 
     def send(self, i, j):
         super().send(i, j)

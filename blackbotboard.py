@@ -22,7 +22,6 @@ class Blackbotboard(Board):
         if self.current_player == 1:
             self.blackbot_play()
             self.show_win()
-        
 
     def show_win(self):
         super().show_win()
