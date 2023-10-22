@@ -99,4 +99,4 @@ class hard_white_bot(easy_white_bot):
                 self.clear_hint()
                 self.current_player = 3 - self.current_player
                 self.hinter()
-        return super().white_bot_play()
+    
