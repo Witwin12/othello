@@ -14,7 +14,7 @@ class Buttonmenu(tk.Button):
         self.configure(command=self.open_thatframe)
 
     def open_thatframe(self):
-        self.board.gamestate = False
+        bvb.gamestate = False
         for frame in frames:
             frame.pack_forget()  # Hide all frames
 
@@ -109,4 +109,3 @@ pveb_button.place(y= 270, x=10)
 frames.append(pvwb)
 
 root.mainloop()
-#bug เวลาเล่นกับบอทแล้วไม่มีturnฝั่งบอทขึ้นเตือนปกติ ฝั่งเราข้อความไม่ขึ้นต้องclickก่อนข้อความถึงขึ้น เป็นทั้งสีขาวกับดำ
