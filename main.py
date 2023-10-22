@@ -31,6 +31,7 @@ class Newbuttonmenu(Buttonmenu):
 
 ############# use for home button ###################
 def Home():
+    bvb.gamestate = False
     for frame in frames:
         frame.pack_forget()
 
@@ -102,10 +103,15 @@ bvb_button.configure(text='Bot vs Bot', font=('Forte',12), borderwidth=5, relief
 bvb_button.place(y= 220, x=10)
 frames.append(bvb)
 #p vs easy bot
-pveb_button = wb.easy_white_bot(game_frame)
-pveb_button = Buttonmenu(option_frame, bbvp, game_frame)
-pveb_button.configure(text='Player vs easy bot', font=('Forte',12), borderwidth=5, relief=tk.RIDGE)
-pveb_button.place(y= 270, x=10)
+pvwb = wb.easy_white_bot(game_frame)
+pvwb_button = Buttonmenu(option_frame, pvwb, game_frame)
+pvwb_button.configure(text='Player vs Easy Bot', font=('Forte',12), borderwidth=5, relief=tk.RIDGE)
+pvwb_button.place(y= 270, x=10)
 frames.append(pvwb)
-
+#p vs hard bot
+pvwb = wb.hard_white_bot(game_frame)
+pvwb_button = Buttonmenu(option_frame, pvwb, game_frame)
+pvwb_button.configure(text='Player vs Hard Bot', font=('Forte',12), borderwidth=5, relief=tk.RIDGE)
+pvwb_button.place(y= 370, x=10)
+frames.append(pvwb)
 root.mainloop()
