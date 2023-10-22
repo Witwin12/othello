@@ -50,6 +50,7 @@ class bot(Board):
             elif self.current_player ==2:
                 self.after(10000,self.white_bot_play())
             self.show_win()
+        pass
     def show_win(self):
         super().show_win()
         if self.setting.table_matrix == [[0, 0, 0, 0, 0, 0, 0, 0],

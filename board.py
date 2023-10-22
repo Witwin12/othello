@@ -107,7 +107,6 @@ class Board(tk.Frame):
             messagebox.showinfo('End Game!',self.setting.determine_winner()+ f'\nTime: [{self.time_widget.timeHour:02d}:{self.time_widget.timeMin:02d}:{self.time_widget.timeSec:02d}]')
             self.time_widget.flag = True
             self.time_widget.update_time()
-            self.time_widget.reset_time()
 
             self.setting.table_matrix = [[0, 0, 0, 0, 0, 0, 0, 0],
                                          [0, 0, 0, 0, 0, 0, 0, 0],
@@ -148,3 +147,21 @@ class Board(tk.Frame):
         self.player2_score = sum(row.count(2) for row in self.setting.table_matrix)
         self.player1_show_score.configure(text=f'Black score: {self.player1_score}')
         self.player2_show_score.configure(text=f'White score: {self.player2_score}')
+
+    def reset(self):
+
+            self.setting.table_matrix = [[0, 0, 0, 0, 0, 0, 0, 0],
+                                         [0, 0, 0, 0, 0, 0, 0, 0],
+                                         [0, 0, 0, 0, 0, 0, 0, 0],
+                                         [0, 0, 0, 2, 1, 0, 0, 0],
+                                         [0, 0, 0, 1, 2, 0, 0, 0],
+                                         [0, 0, 0, 0, 0, 0, 0, 0],
+                                         [0, 0, 0, 0, 0, 0, 0, 0],
+                                         [0, 0, 0, 0, 0, 0, 0, 0]]
+            self.update_board()
+            self.current_player = 1
+            self.update_score()
+            self.time_widget.reset_time()
+            self.clear_hint()
+            self.hinter()
+            

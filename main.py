@@ -1,77 +1,89 @@
-import board as b
 import tkinter as tk
-import blackbotboard as bb
-import white_bot
-import bot_vs_bot
-# Declare board and game_started as global variables
-board = None
-menu_button = None
-def player_vs_player():
-    global board,menu_button
-    pvp_button.destroy()
-    bot_button.destroy()
-    wbot_button.destroy()
-    board = b.Board(root)
-    board.place(x=300, y=80)
-    board.configure(bg='lightgray')
-    menu_button = tk.Button(root, text='Main Menu', command=main_menu, width=20, height=5, bg='green')
-    menu_button.place(x=100, y=100)# create menu button
+from tkinter import PhotoImage, Canvas
+from board import Board
+from blackbotboard import Blackbotboard
+import white_bot as wb
+class Buttonmenu(tk.Button):
+    def __init__(self, master, board, frame):
+        super().__init__(master, bg='light pink', borderwidth=5, relief=tk.RIDGE)
+        self.board = board
+        self.frame = frame
 
-def player_vs_bot():
-    global board,menu_button
-    bot_button.destroy()
-    pvp_button.destroy()
-    wbot_button.destroy()
-    board = bb.Blackbotboard(root)
-    board.place(x=300, y=80)
-    board.configure(bg='lightgray')
-    menu_button = tk.Button(root, text='Main Menu', command=main_menu, width=20, height=5, bg='green')
-    menu_button.place(x=100, y=100)
+        self.configure(command=self.open_thatframe)
 
-def player_vs_white_bot():
-    global board,menu_button
-    pvp_button.destroy()
-    bot_button.destroy()
-    wbot_button.destroy()
-    board = white_bot.white_bot(root)
-    board.place(x=300, y=80)
-    board.configure(bg='lightgray')
-    menu_button = tk.Button(root, text='Main Menu', command=main_menu, width=20, height=5, bg='green')
-    menu_button.place(x=100, y=100)
-def bot():
-    global board,menu_button
-    pvp_button.destroy()
-    bot_button.destroy()
-    wbot_button.destroy()
-    board = bot_vs_bot.bot(root)
-    board.place(x=300, y=80)
-    board.configure(bg='lightgray')
-    menu_button = tk.Button(root, text='Main Menu', command=main_menu, width=20, height=5, bg='green')
-    menu_button.place(x=100, y=100)
-def main_menu():
-    global board,menu_button
-    if board:
-        board.destroy()
-        board = None
-    pvp_button = tk.Button(root, text='Player VS player', command=player_vs_player, width=20, height=5, bg='green')
-    pvp_button.place(x=450, y=100)
-    bot_button = tk.Button(root, text='Player VS black Bot', command=player_vs_bot, width=20, height=5, bg='green')
-    bot_button.place(x=450, y=200)
-    wbot_button = tk.Button(root, text='Player VS white Bot', command=player_vs_white_bot, width=20, height=5, bg='green')
-    wbot_button.place(x=450, y=300)
-    menu_button.destroy()
+    def open_thatframe(self):
+        for frame in frames:
+            frame.pack_forget()  # Hide all frames
+
+        self.board.reset()
+        self.board.pack(in_=self.frame)
+
+
+############# use for home button ###################
+def Home():
+    for frame in frames:
+        frame.pack_forget()
+
 root = tk.Tk()
-root.title('OTHELLO!')
-root.geometry('1000x700')
-title = tk.Label(root, text='OTHELLO!!!', font=("Arial", 40))
-title.pack()
+root.title('Othello')
+root.geometry('600x600')
 
-pvp_button = tk.Button(root, text='Player VS player', command=player_vs_player, width=20, height=5, bg='green')
-pvp_button.place(x=450, y=100)
-bot_button = tk.Button(root, text='Player VS black Bot', command=player_vs_bot, width=20, height=5, bg='green')
-bot_button.place(x=450, y=200)
-wbot_button = tk.Button(root, text='Player VS white Bot', command=player_vs_white_bot, width=20, height=5, bg='green')
-wbot_button.place(x=450, y=300)
-bot_vs_bot_button = tk.Button(root, text='bot vs bot', command=bot, width=20, height=5, bg='green')
-bot_vs_bot_button.place(x=450,y=400)
+
+bg_image = PhotoImage(file='bg_option.png')
+
+option_frame = tk.Frame(root, borderwidth=5, relief=tk.RIDGE)
+option_frame.pack(side=tk.LEFT)
+option_frame.configure(width=200, height=600)
+
+# ใช้ Label แสดงรูปภาพใน option_frame
+option_label = tk.Label(option_frame, image=bg_image)
+option_label.place(relwidth=1, relheight=1)  # ทำให้รูปเต็มพื้นที่ของ option_frame
+
+bg_g_image = PhotoImage(file='bg_game.png')
+
+game_frame = tk.Frame(root)
+game_frame.configure(width=400, height=600)
+game_frame.pack()
+game_label = tk.Label(game_frame, image= bg_g_image)
+game_label.place(relwidth=1, relheight=1)
+
+############## home widget ###############
+title_label = tk.Label(game_frame,text= 'Othello', font=('Forte',50), borderwidth=3, relief=tk.RIDGE, bg='light yellow')
+title_label.place(x=80, y=50)
+
+credits_label = tk.Label(game_frame, text='By\nPruek Tanvorakul 6601012610083\nWitthawin Thitichettrakul 6601012610148'
+                         , font=('Grandview',14), borderwidth=3, relief=tk.RIDGE, bg='light yellow')
+credits_label.place(x=25, y=500)
+
+
+title_widget = tk.Label()
+
+frames = []
+# button PVP
+pvp = Board(game_frame)
+pvp_button = Buttonmenu(option_frame, pvp, game_frame)
+pvp_button.configure(text='Player vs Player', font=('Forte',12), borderwidth=5, relief=tk.RIDGE)
+pvp_button.place(y= 120, x=50)
+frames.append(pvp)
+
+# button PVWB
+pvwb = wb.white_bot(game_frame)
+pvwb_button = Buttonmenu(option_frame, pvwb, game_frame)
+pvwb_button.configure(text='Player vs Bot', font=('Forte',12), borderwidth=5, relief=tk.RIDGE)
+pvwb_button.place(y= 220, x=50)
+frames.append(pvwb)
+
+# button BBVP
+bbvp = Blackbotboard(game_frame)
+bbvp_button = Buttonmenu(option_frame, bbvp, game_frame)
+bbvp_button.configure(text='Bot vs Player', font=('Forte',12), borderwidth=5, relief=tk.RIDGE)
+bbvp_button.place(y= 320, x=50)
+frames.append(bbvp)
+
+# Home
+home_buuton = tk.Button(option_frame, text='Home', font=('Forte',12), bg='light pink', borderwidth=5, relief=tk.RIDGE)
+home_buuton.place(y= 20, x=50)
+home_buuton.configure(command=Home)
+
+
 root.mainloop()

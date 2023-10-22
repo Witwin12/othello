@@ -76,4 +76,4 @@ class Setting():
         elif player2_score > player1_score:
             return "สีขาวชนะ!"
         else:
-            return "เกมเสมอ!"                   
+            return "เกมเสมอ!"                    
