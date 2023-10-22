@@ -1,6 +1,6 @@
 from board import Board
 import random
-
+from tkinter import messagebox
 class Blackbotboard(Board):
     def __init__(self, master):
         super().__init__(master)
@@ -16,7 +16,12 @@ class Blackbotboard(Board):
         self.hinter()
         self.fixed_show_player()
         self.update_score()
-
+        if len(self.setting.find_valid_moves(self.current_player)) == 0:
+                messagebox.showinfo('Attention please!','The game have to swap player.')
+                print('swap player')
+                self.clear_hint()
+                self.current_player = 3 - self.current_player
+                self.hinter()
     def send(self, i, j):
         super().send(i, j)
         if self.current_player == 1:

@@ -21,7 +21,7 @@ class Botvsbot(Board):
             
             if len(self.setting.find_valid_moves(1)) ==0 and len(self.setting.find_valid_moves(2))==0:
                  self.show_win()
-        self.after(1, self.auto)
+        self.after(1000, self.auto)
 
     def blackbot_play(self):
         i,j = random.choice(self.setting.find_valid_moves(self.current_player))
