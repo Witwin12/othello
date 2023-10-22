@@ -22,6 +22,7 @@ class Blackbotboard(Board):
         if self.current_player == 1:
             self.blackbot_play()
             self.show_win()
+        
 
     def show_win(self):
         super().show_win()
@@ -34,3 +35,21 @@ class Blackbotboard(Board):
                                          [0, 0, 0, 0, 0, 0, 0, 0],
                                          [0, 0, 0, 0, 0, 0, 0, 0]]:
             self.blackbot_play()
+    
+    def reset(self):
+
+        self.setting.table_matrix = [[0, 0, 0, 0, 0, 0, 0, 0],
+                                         [0, 0, 0, 0, 0, 0, 0, 0],
+                                         [0, 0, 0, 0, 0, 0, 0, 0],
+                                         [0, 0, 0, 2, 1, 0, 0, 0],
+                                         [0, 0, 0, 1, 2, 0, 0, 0],
+                                         [0, 0, 0, 0, 0, 0, 0, 0],
+                                         [0, 0, 0, 0, 0, 0, 0, 0],
+                                         [0, 0, 0, 0, 0, 0, 0, 0]]
+        self.update_board()
+        self.current_player = 1
+        self.blackbot_play()
+        self.update_score()
+        self.time_widget.reset_time()
+        self.clear_hint()
+        self.hinter()

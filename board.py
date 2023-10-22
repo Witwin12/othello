@@ -164,4 +164,3 @@ class Board(tk.Frame):
             self.time_widget.reset_time()
             self.clear_hint()
             self.hinter()
-            

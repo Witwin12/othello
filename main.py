@@ -1,8 +1,10 @@
 import tkinter as tk
-from tkinter import PhotoImage, Canvas
+from tkinter import PhotoImage
 from board import Board
 from blackbotboard import Blackbotboard
 import white_bot as wb
+from bot_vs_bot import Botvsbot
+
 class Buttonmenu(tk.Button):
     def __init__(self, master, board, frame):
         super().__init__(master, bg='light pink', borderwidth=5, relief=tk.RIDGE)
@@ -12,12 +14,20 @@ class Buttonmenu(tk.Button):
         self.configure(command=self.open_thatframe)
 
     def open_thatframe(self):
+        self.board.gamestate = False
         for frame in frames:
             frame.pack_forget()  # Hide all frames
 
         self.board.reset()
         self.board.pack(in_=self.frame)
 
+class Newbuttonmenu(Buttonmenu):
+    def __init__(self, master, board, frame):
+        super().__init__(master, board, frame)
+
+    def open_thatframe(self):
+        super().open_thatframe()
+        self.board.gamestate = True
 
 ############# use for home button ###################
 def Home():
@@ -63,27 +73,40 @@ frames = []
 pvp = Board(game_frame)
 pvp_button = Buttonmenu(option_frame, pvp, game_frame)
 pvp_button.configure(text='Player vs Player', font=('Forte',12), borderwidth=5, relief=tk.RIDGE)
-pvp_button.place(y= 120, x=50)
+pvp_button.place(y= 120, x=10)
 frames.append(pvp)
 
 # button PVWB
-pvwb = wb.white_bot(game_frame)
+pvwb = wb.normal_white_bot(game_frame)
 pvwb_button = Buttonmenu(option_frame, pvwb, game_frame)
-pvwb_button.configure(text='Player vs Bot', font=('Forte',12), borderwidth=5, relief=tk.RIDGE)
-pvwb_button.place(y= 220, x=50)
+pvwb_button.configure(text='Player vs Normal Bot', font=('Forte',12), borderwidth=5, relief=tk.RIDGE)
+pvwb_button.place(y= 320, x=10)
 frames.append(pvwb)
 
 # button BBVP
 bbvp = Blackbotboard(game_frame)
 bbvp_button = Buttonmenu(option_frame, bbvp, game_frame)
 bbvp_button.configure(text='Bot vs Player', font=('Forte',12), borderwidth=5, relief=tk.RIDGE)
-bbvp_button.place(y= 320, x=50)
+bbvp_button.place(y= 170, x=10)
 frames.append(bbvp)
 
 # Home
-home_buuton = tk.Button(option_frame, text='Home', font=('Forte',12), bg='light pink', borderwidth=5, relief=tk.RIDGE)
-home_buuton.place(y= 20, x=50)
-home_buuton.configure(command=Home)
+home_button = tk.Button(option_frame, text='Home', font=('Forte',12), bg='light pink', borderwidth=5, relief=tk.RIDGE)
+home_button.place(y= 20, x=30)
+home_button.configure(command=Home)
 
+# button BVB
+bvb = Botvsbot(game_frame)
+bvb_button = Newbuttonmenu(option_frame, bvb, game_frame)
+bvb_button.configure(text='Bot vs Bot', font=('Forte',12), borderwidth=5, relief=tk.RIDGE)
+bvb_button.place(y= 220, x=10)
+frames.append(bvb)
+#p vs easy bot
+pveb_button = wb.easy_white_bot(game_frame)
+pveb_button = Buttonmenu(option_frame, bbvp, game_frame)
+pveb_button.configure(text='Player vs easy bot', font=('Forte',12), borderwidth=5, relief=tk.RIDGE)
+pveb_button.place(y= 270, x=10)
+frames.append(pvwb)
 
 root.mainloop()
+#bug เวลาเล่นกับบอทแล้วไม่มีturnฝั่งบอทขึ้นเตือนปกติ ฝั่งเราข้อความไม่ขึ้นต้องclickก่อนข้อความถึงขึ้น เป็นทั้งสีขาวกับดำ

@@ -2,7 +2,7 @@ import tkinter as tk
 
 class Time_widget(tk.Label):
     def __init__(self, master):
-        super().__init__(master, text='[Time: 0:00:00]', bg='light gray', font=('Grandview', 12))
+        super().__init__(master, text='Time: [0:00:00]', bg='light gray', font=('Grandview', 12))
 
         self.flag = True  # Set the flag to True
         self.timeSec = 0
@@ -30,4 +30,4 @@ class Time_widget(tk.Label):
         self.timeSec = 0
         self.timeMin = 0
         self.timeHour = 0
-        self.configure(text='[Time: 00:00:00]')
+        self.configure(text='Time: [00:00:00]')
