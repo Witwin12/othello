@@ -1,5 +1,4 @@
 from board import Board
-import random
 from tkinter import messagebox
 class easy_white_bot(Board):
     def __init__(self, master):
@@ -8,7 +7,7 @@ class easy_white_bot(Board):
     def white_bot_play(self):
         if self.current_player == 2:#check a white turn
             valid_moves = self.setting.find_valid_moves(self.current_player)
-            i,j = random.choice(valid_moves)
+            i,j = valid_moves[0]
             print(f'Go GO {i},{j}')
             self.setting.place_piece(i, j, self.current_player)
             self.clear_hint()
@@ -46,8 +45,7 @@ class normal_white_bot(easy_white_bot):
                     break
                 else:
                     #pick a first move 
-                    new_current_player = [valid_moves[0],valid_moves[-1]]
-                    i, j = random.choice(new_current_player)
+                    i,j = valid_moves[0]
         
             print(f'Go GO {i},{j}')
             self.setting.place_piece(i, j, self.current_player)
@@ -88,8 +86,7 @@ class hard_white_bot(easy_white_bot):
                         break
                     else:
                         #pick a first move 
-                        new_current_player = [valid_moves[0],valid_moves[-1]]
-                        i, j = random.choice(new_current_player)
+                        i,j = valid_moves[0]
             print(f'Go GO {i},{j}')
             self.setting.place_piece(i, j, self.current_player)
             self.clear_hint()
