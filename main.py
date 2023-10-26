@@ -43,9 +43,8 @@ def bot():# change a frame to bot frame
     if flag:
         option_frame.pack_forget()
         bot_frame.place(x=0,y=0)
-    if bvb.gamestate == True:
-        for frame in frames:
-            frame.pack_forget()
+    for frame in frames:
+        frame.pack_forget()
     bvb.gamestate = False
 root = tk.Tk()
 root.title('Othello')
@@ -66,7 +65,7 @@ bg_g_image = PhotoImage(file='bg_game.png')
 
 game_frame = tk.Frame(root)
 game_frame.configure(width=400, height=600)
-game_frame.place(x=200,y=0)
+game_frame.place(x=205,y=0)
 game_label = tk.Label(game_frame, image= bg_g_image)
 game_label.place(relwidth=1, relheight=1)
 

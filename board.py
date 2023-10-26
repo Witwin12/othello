@@ -16,7 +16,9 @@ class Board(tk.Frame):
         self.show_player()
         self.create_total_score()
         self.time_widget = Time_widget(self)  # Create a Time_widget instance
-        self.time_widget.grid(row=14, columnspan=8, pady= 10)  # Display the Time_widget label on your board
+        self.time_widget.grid(row=13,column=1, columnspan=6, pady= 10)  # Display the Time_widget label on your board
+        self.reset_widget()
+        self.re_widget.place(x=50,y=525)
     
     def create_table(self):
         self.buttons = []
@@ -164,3 +166,7 @@ class Board(tk.Frame):
             self.time_widget.reset_time()
             self.clear_hint()
             self.hinter()
+
+    def reset_widget(self):
+        self.re_widget = tk.Button(self, text='Reset', bg='light gray', font=('Grandview',12),activebackground='red')
+        self.re_widget.configure(command=lambda: self.reset())
