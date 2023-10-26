@@ -90,7 +90,7 @@ frames = []
 pvp = Board(game_frame)
 pvp_button = Buttonmenu(option_frame, pvp, game_frame)
 pvp_button.configure(text='Player vs Player', font=('Forte',12), borderwidth=5, relief=tk.RIDGE)
-pvp_button.place(y= 120, x=10)
+pvp_button.place(y= 120, x=30)
 frames.append(pvp)
 
 # button PVWB
@@ -119,7 +119,7 @@ new_home_button.place(y= 20, x=30)
 bvb = Botvsbot(game_frame)
 bvb_button = Newbuttonmenu(option_frame, bvb, game_frame)
 bvb_button.configure(text='Bot vs Bot', font=('Forte',12), borderwidth=5, relief=tk.RIDGE)
-bvb_button.place(y= 370, x=10)
+bvb_button.place(y= 370, x=40)
 frames.append(bvb)
 #p vs easy bot
 pvwb = wb.easy_white_bot(game_frame)
@@ -135,7 +135,7 @@ pvwb_button.place(y= 270, x=10)
 frames.append(pvwb)
 #bot button
 bot_button = tk.Button(option_frame,text='vs Bot', font=('Forte',12), borderwidth=5, relief=tk.RIDGE,command=bot,bg = 'light pink')
-bot_button.place(y=250,x=10)
+bot_button.place(y=250,x=50)
 # normal bb vs p button
 bbvp = bb.normal_black_bot(game_frame)
 bbvp_button = Buttonmenu(bot_frame, bbvp, game_frame)
